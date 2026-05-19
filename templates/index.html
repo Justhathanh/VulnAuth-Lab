@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %} — Challenges{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Challenge Board</h1>
+<p class="subtitle">Attack each vulnerability, capture the flag, then read the writeup.</p>
+
+<div class="challenge-grid">
+
+    <div class="category-header">Authentication</div>
+
+    <div class="challenge-card easy">
+        <div class="card-meta">
+            <span class="badge badge-easy">Easy</span>
+            <span class="badge badge-auth">Auth</span>
+        </div>
+        <h3>Bypass Login via SQL Injection</h3>
+        <p>Login form dùng raw SQL query. Bypass mà không cần password.</p>
+        <div class="card-actions">
+            <a href="{{ url_for('auth.login') }}" class="btn btn-attack">Attack</a>
+        </div>
+        <div class="hint">Hint: thử <code>admin' --</code> ở username.</div>
+    </div>
+
+    <div class="challenge-card easy">
+        <div class="card-meta">
+            <span class="badge badge-easy">Easy</span>
+            <span class="badge badge-auth">Auth</span>
+        </div>
+        <h3>Brute-Force Login</h3>
+        <p>Không có rate limit, không có lockout. Viết script đăng nhập thử hàng loạt.</p>
+        <div class="card-actions">
+            <a href="{{ url_for('auth.login') }}" class="btn btn-attack">Attack</a>
+        </div>
+        <div class="hint">Hint: dùng Python <code>requests</code> trong vòng lặp.</div>
+    </div>
+
+    <div class="challenge-card easy">
+        <div class="card-meta">
+            <span class="badge badge-easy">Easy</span>
+            <span class="badge badge-auth">Auth</span>
+        </div>
+        <h3>Account Enumeration</h3>
+        <p>Form reset password trả về message khác nhau cho email tồn tại và không tồn tại.</p>
+        <div class="card-actions">
+            <a href="{{ url_for('auth.reset') }}" class="btn btn-attack">Attack</a>
+        </div>
+        <div class="hint">Hint: so sánh response giữa <code>admin@lab.local</code> và <code>fake@x.com</code>.</div>
+    </div>
+
+    <div class="category-header">Session Management</div>
+
+    <div class="challenge-card medium">
+        <div class="card-meta">
+            <span class="badge badge-medium">Medium</span>
+            <span class="badge badge-session">Session</span>
+        </div>
+        <h3>Session Fixation</h3>
+        <p>Force session ID lên victim trước khi họ login, sau đó hijack session.</p>
+        <div class="card-actions">
+            <a href="{{ url_for('session.fixation_demo') }}" class="btn btn-attack">Attack</a>
+        </div>
+        <div class="hint">Hint: <code>/session/fixation-demo?sid=hacker123</code></div>
+    </div>
+
+    <div class="challenge-card medium">
+        <div class="card-meta">
+            <span class="badge badge-medium">Medium</span>
+            <span class="badge badge-session">Session</span>
+        </div>
+        <h3>Predict Session Token</h3>
+        <p>Token tạo từ timestamp + MD5. Predict trong window 1-2 giây.</p>
+        <div class="card-actions">
+            <a href="{{ url_for('session.token_gen') }}" class="btn btn-attack">Attack</a>
+        </div>
+        <div class="hint">Hint: <code>hashlib.md5(str(time.time()).encode()).hexdigest()[:16]</code></div>
+    </div>
+
+    <div class="challenge-card medium">
+        <div class="card-meta">
+            <span class="badge badge-medium">Medium</span>
+            <span class="badge badge-session">Session</span>
+        </div>
+        <h3>CSRF — Forge a Request</h3>
+        <p>Endpoint đổi email không có CSRF token. Craft trang độc hại tự submit form.</p>
+        <div class="card-actions">
+            <a href="{{ url_for('session.change_email') }}" class="btn btn-attack">Attack</a>
+        </div>
+        <div class="hint">Hint: tạo evil.html tự submit POST đến <code>/session/change-email</code>.</div>
+    </div>
+
+</div>
+{% endblock %}

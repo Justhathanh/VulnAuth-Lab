@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %} — Session Fixation{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="vuln-label">VULN: Session Fixation</div>
+    <h2>Session Fixation Demo</h2>
+
+    <p>Step 1: Vào <code>/session/fixation-demo?sid=hacker123</code></p>
+    <p>Step 2: Gửi link đó cho victim, bảo họ login.</p>
+    <p>Step 3: Bạn dùng <code>sid=hacker123</code> để hijack session của victim.</p>
+
+    {% if sid %}
+    <div class="alert alert-error">Session ID bị fix: <strong>{{ sid }}</strong></div>
+    {% endif %}
+    {% if current %}
+    <div class="alert alert-info">Current session _id: <strong>{{ current }}</strong></div>
+    {% endif %}
+
+    <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Proceed to Login →</a>
+
+    <div class="code-hint">
+        <div class="code-hint-title">Vulnerable code</div>
+        <pre>sid = request.args.get("sid")
+if sid:
+    session["_id"] = sid  # attacker controls this</pre>
+    </div>
+</div>
+{% endblock %}

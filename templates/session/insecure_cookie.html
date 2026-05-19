@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %} — Insecure Cookie{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="vuln-label">VULN: Missing Secure + HttpOnly + SameSite</div>
+    <h2>Insecure Cookie Demo</h2>
+
+    <p>Cookie <code>auth_token</code> vừa được set không có security flags.</p>
+    <p>Mở browser console gõ <code>document.cookie</code> — đọc được token ngay.</p>
+
+    <div class="code-hint">
+        <div class="code-hint-title">Vulnerable code</div>
+        <pre>resp.set_cookie("auth_token", "user_session_abc123",
+                httponly=False,
+                secure=False,
+                samesite=None)
+
+# Fix:
+resp.set_cookie("auth_token", token,
+                httponly=True,
+                secure=True,
+                samesite="Strict",
+                max_age=3600)</pre>
+    </div>
+</div>
+{% endblock %}

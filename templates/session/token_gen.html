@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %} — Token Prediction{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="vuln-label">VULN: Predictable Token (MD5 + timestamp)</div>
+    <h2>Token Generator</h2>
+
+    <p>Generated at: <code>{{ raw }}</code></p>
+    <p>Token: <code>{{ token }}</code></p>
+
+    <a href="{{ url_for('session.token_gen') }}" class="btn btn-primary">Generate New</a>
+
+    <div class="code-hint">
+        <div class="code-hint-title">Vulnerable code</div>
+        <pre>raw = str(time.time())
+token = hashlib.md5(raw.encode()).hexdigest()[:16]
+
+# Fix: secrets.token_hex(32)</pre>
+    </div>
+</div>
+{% endblock %}

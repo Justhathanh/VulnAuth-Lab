@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, make_response
-from app import get_db
+from database import get_db
 import time
 import hashlib
 

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %} — No Session Expiry{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="vuln-label">VULN: No Session Expiry</div>
+    <h2>Session Without Expiry</h2>
+
+    <p>Logged in as <strong>{{ user }}</strong>.</p>
+    <p>Session này không bao giờ hết hạn trên server.</p>
+
+    <div class="code-hint">
+        <div class="code-hint-title">Vulnerable code</div>
+        <pre>session.permanent = False
+# Không có kiểm tra thời gian tạo session
+
+# Fix:
+session["created_at"] = datetime.utcnow().isoformat()
+# Mỗi request kiểm tra:
+# if now - created_at > 30 phút: session.clear()</pre>
+    </div>
+</div>
+{% endblock %}

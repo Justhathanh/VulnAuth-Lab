@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %} — Dashboard{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Welcome, {{ user }}</h1>
+<p class="subtitle">Bạn đã đăng nhập. Khám phá các session vulnerability bên dưới.</p>
+
+<div class="challenge-grid">
+    <div class="category-header">Session Labs</div>
+
+    <div class="challenge-card medium">
+        <h3>Session Fixation</h3>
+        <a href="{{ url_for('session.fixation_demo') }}" class="btn btn-attack">Demo</a>
+    </div>
+
+    <div class="challenge-card medium">
+        <h3>Predictable Token</h3>
+        <a href="{{ url_for('session.token_gen') }}" class="btn btn-attack">Demo</a>
+    </div>
+
+    <div class="challenge-card medium">
+        <h3>No Session Expiry</h3>
+        <a href="{{ url_for('session.no_expiry') }}" class="btn btn-attack">Demo</a>
+    </div>
+
+    <div class="challenge-card medium">
+        <h3>CSRF — Change Email</h3>
+        <a href="{{ url_for('session.change_email') }}" class="btn btn-attack">Demo</a>
+    </div>
+
+    <div class="challenge-card medium">
+        <h3>Insecure Cookie Flags</h3>
+        <a href="{{ url_for('session.insecure_cookie') }}" class="btn btn-attack">Demo</a>
+    </div>
+</div>
+
+<a href="{{ url_for('auth.logout') }}" class="btn btn-outline" style="margin-top:2rem">Logout</a>
+{% endblock %}

